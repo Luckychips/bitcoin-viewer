@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@variables/*": ["./variables/*"],
+      "@pages/*": ["./pages/*"]
+    },
+    "typeRoots": ["src/types", "node_modules/@types"]
+  }
+}
