@@ -23,9 +23,11 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "craco start",
+    "ts-check": "tsc --skipLibCheck --noEmit",
+    "start": "yarn ts-check && craco start",
     "build": "craco build",
-    "test": "craco test"
+    "test": "craco test",
+    "lint": "eslint ."
   },
   "eslintConfig": {
     "extends": [
@@ -49,7 +51,12 @@
     "@craco/craco": "^6.1.1",
     "@emotion/babel-preset-css-prop": "^11.2.0",
     "@types/react-router-dom": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
     "craco-alias": "^2.1.1",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-react": "^7.22.0",
     "prettier": "^2.2.1"
   }
 }
