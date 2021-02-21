@@ -1,9 +1,9 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
-import { currencyState, currencyStateFromLocalStorage } from '@stores/Currency';
+import { useRecoilValue } from 'recoil';
+import { currencyState } from '@stores/Currency';
 
 function Presenter() {
-  const [currency] = useRecoilState(currencyState);
+  const currency = useRecoilValue(currencyState);
 
   return (
     <>

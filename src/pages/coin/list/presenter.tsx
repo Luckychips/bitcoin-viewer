@@ -1,24 +1,25 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
-import { currencyState, currencyStateFromLocalStorage } from '@stores/recoil';
-import { CURRENCY_NAMES } from '@variables/constant';
+import { useRecoilValue } from 'recoil';
+import styled from '@emotion/styled';
+import { currencyState } from '@stores/recoil';
+import { DropDownMenu } from '@components/core';
+
+const Container = styled.div`
+  width: 800px;
+  display: block;
+  margin: 0 auto;
+  padding: 25px 0;
+`;
 
 function Presenter() {
-  const [currency, setCurrency] = useRecoilState(currencyState);
-  const [, setCurrencyFromLocalStorage] = useRecoilState(currencyStateFromLocalStorage);
-
-  const updateCurrency = (value: string) => {
-    setCurrency(value);
-    setCurrencyFromLocalStorage(value);
-  };
+  const currency = useRecoilValue(currencyState);
 
   return (
-    <div>
-      <button onClick={() => updateCurrency(CURRENCY_NAMES.KRW)}>krw</button>
-      <button onClick={() => updateCurrency(CURRENCY_NAMES.USD)}>usd</button>
+    <Container>
+      <DropDownMenu />
       <div>hello coins</div>
       <div>{currency}</div>
-    </div>
+    </Container>
   );
 }
 
