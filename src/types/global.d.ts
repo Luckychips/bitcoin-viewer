@@ -1,0 +1,3 @@
+type StyleProps = {
+  color?: string;
+};
