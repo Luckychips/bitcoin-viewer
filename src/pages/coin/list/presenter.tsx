@@ -2,12 +2,13 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from '@emotion/styled';
 import { currencyState } from '@stores/recoil';
-import { ListItem } from '@components/core';
-import { DropDownMenu } from '@components/core';
+import { DropDownMenu, ListItem, LoadingIndicator, LoadMoreButton } from '@components/core';
 import { CoinData } from '@models/coin';
 
 type PresenterProps = {
+  isLoading: boolean;
   list: CoinData[];
+  loadMoreItems: () => void;
 };
 
 const Container = styled.div`
@@ -17,7 +18,11 @@ const Container = styled.div`
   padding: 25px 0;
 `;
 
-function Presenter({ list }: PresenterProps) {
+function Presenter({
+  isLoading,
+  list,
+  loadMoreItems,
+}: PresenterProps) {
   const currency = useRecoilValue(currencyState);
 
   return (
@@ -26,6 +31,7 @@ function Presenter({ list }: PresenterProps) {
       {list.map((item, index) => (
         <ListItem key={`coin-item-${index}`} item={item} />
       ))}
+      {isLoading ? <LoadingIndicator /> : <LoadMoreButton onClick={loadMoreItems} />}
     </Container>
   );
 }

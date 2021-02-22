@@ -8,6 +8,8 @@ import { currencyState, currencyStateFromLocalStorage } from '@stores/Currency';
 const Container = styled.div`
   position: relative;
   display: inline-block;
+  z-index: 11;
+  margin-bottom: 25px;
 `;
 
 const Header = styled.div`
@@ -61,8 +63,13 @@ const DropDownMenu = () => {
       </Header>
       {isVisibleMenu && (
         <MenuItems>
-          <MenuItem onClick={() => changeCurrency(CURRENCY_NAMES.KRW)}>{CURRENCY_NAMES.KRW}</MenuItem>
-          <MenuItem onClick={() => changeCurrency(CURRENCY_NAMES.USD)}>{CURRENCY_NAMES.USD}</MenuItem>
+          {Object.values(CURRENCY_NAMES).map((item, index) => (
+            <MenuItem
+                key={`drop-down-menu-item-${index}`}
+                onClick={() => changeCurrency(item)}>
+              {item}
+            </MenuItem>
+          ))}
         </MenuItems>
       )}
     </Container>

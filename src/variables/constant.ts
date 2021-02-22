@@ -10,4 +10,5 @@ export const STORAGE_KEY_NAMES = {
 export const CURRENCY_NAMES = {
   KRW: 'KRW',
   USD: 'USD',
+  JPY: 'JPY',
 };

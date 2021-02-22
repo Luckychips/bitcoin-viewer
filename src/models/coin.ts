@@ -3,6 +3,7 @@ export type CoinData = {
   name: string;
   symbol: string;
   image?: string;
+  market_cap_rank?: string;
   isBookMarked: boolean;
 };
 
