@@ -8,7 +8,7 @@ type LoadMoreButtonProps = {
 const Wrapper = styled.div`
   text-align: center;
   margin-top: 30px;
-  
+
   div {
     display: inline-block;
     padding: 10px 20px;
@@ -24,9 +24,9 @@ const Wrapper = styled.div`
 
 const LoadMoreButton = ({ onClick }: LoadMoreButtonProps) => {
   return (
-      <Wrapper onClick={onClick}>
-        <div>더보기</div>
-      </Wrapper>
+    <Wrapper onClick={onClick}>
+      <div>더보기</div>
+    </Wrapper>
   );
 };
 

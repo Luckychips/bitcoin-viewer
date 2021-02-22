@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { currencyState } from '@stores/Currency';
+import { useRecoilState } from 'recoil';
+import { currencyState, currencyStateFromLocalStorage } from '@stores/Currency';
 import { CoinData } from '@models/coin';
 import { baseUrl } from '@variables/env';
 import Presenter from './presenter';
 
 function Container() {
-  const currency = useRecoilValue(currencyState);
+  const [currency, setCurrency] = useRecoilState(currencyState);
+  const [, setCurrencyFromLocalStorage] = useRecoilState(currencyStateFromLocalStorage);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [list, setList] = useState<CoinData[]>([]);
@@ -31,18 +32,22 @@ function Container() {
   };
 
   useEffect(() => {
-    (async () => {
-      await getDataFromServer();
-    })();
-  }, [currentPage]);
+    setList([]);
+    setCurrentPage(1);
+    setIsLoading(true);
+    setCurrencyFromLocalStorage(currency);
+    setCurrency(currency);
+  }, [currency]);
 
-  return (
-      <Presenter
-          isLoading={isLoading}
-          list={list}
-          loadMoreItems={loadMoreItems}
-      />
-  );
+  useEffect(() => {
+    (async () => {
+      if (isLoading) {
+        await getDataFromServer();
+      }
+    })();
+  }, [isLoading, currentPage]);
+
+  return <Presenter isLoading={isLoading} list={list} loadMoreItems={loadMoreItems} />;
 }
 
 export default Container;

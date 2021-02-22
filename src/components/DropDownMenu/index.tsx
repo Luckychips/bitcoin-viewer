@@ -64,9 +64,7 @@ const DropDownMenu = () => {
       {isVisibleMenu && (
         <MenuItems>
           {Object.values(CURRENCY_NAMES).map((item, index) => (
-            <MenuItem
-                key={`drop-down-menu-item-${index}`}
-                onClick={() => changeCurrency(item)}>
+            <MenuItem key={`drop-down-menu-item-${index}`} onClick={() => changeCurrency(item)}>
               {item}
             </MenuItem>
           ))}

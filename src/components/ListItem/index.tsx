@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #376fe0;
-  
+
   &:hover {
     background-color: #376fe0;
   }
@@ -60,7 +60,7 @@ const ListItem = ({ item }: ListItemProps) => {
       </BookMarkButton>
       <ThumbnailWrapper>{item.image && <img src={item.image} alt="thumbnail" />}</ThumbnailWrapper>
       <Symbol>{item.symbol.toUpperCase()}</Symbol>
-        <MarketCapRank>#{item.market_cap_rank}</MarketCapRank>
+      <MarketCapRank>#{item.market_cap_rank}</MarketCapRank>
       <Name>{item.name}</Name>
     </Wrapper>
   );

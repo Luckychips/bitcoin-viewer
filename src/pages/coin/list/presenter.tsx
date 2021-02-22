@@ -18,11 +18,7 @@ const Container = styled.div`
   padding: 25px 0;
 `;
 
-function Presenter({
-  isLoading,
-  list,
-  loadMoreItems,
-}: PresenterProps) {
+function Presenter({ isLoading, list, loadMoreItems }: PresenterProps) {
   const currency = useRecoilValue(currencyState);
 
   return (
