@@ -5,3 +5,4 @@ export { default as LoadMoreButton } from './Buttons/LoadMore';
 
 //styled component's
 export { default as MainWrapper } from './Styled/MainWrapper';
+export { default as InlineFlexBox } from './Styled/InlineFlexBox';

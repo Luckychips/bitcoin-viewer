@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from '@emotion/styled';
 import { currencyState } from '@stores/Currency';
-import { MainWrapper, LoadingIndicator } from '@components/core';
+import { MainWrapper, InlineFlexBox, LoadingIndicator } from '@components/core';
 import { CoinData } from '@models/coin';
 
 type PresenterProps = {
@@ -12,7 +12,7 @@ type PresenterProps = {
 
 const PageHeader = styled.div`
   display: flex;
-  align-items: center; 
+  align-items: center;
 `;
 
 const CoinThumbnail = styled.span`
@@ -21,10 +21,33 @@ const CoinThumbnail = styled.span`
   }
 `;
 
-const CoinInfo = styled.span`
+const CoinName = styled.span`
   margin-left: 15px;
   font-size: 1.2rem;
   font-weight: bold;
+`;
+
+const MarketDataTable = styled.div`
+  display: inline-block;
+  display: inline-block;
+  margin-top: 30px;
+  border: 1px solid #777;
+
+  & > div:not(:first-child) {
+    border-top: 1px solid #777;
+  }
+`;
+
+const MarketDataTitle = styled.div`
+  width: 120px;
+  padding: 10px;
+  font-weight: bold;
+  background-color: #ddd;
+`;
+
+const MarketDataValue = styled.div`
+  width: 150px;
+  padding: 10px;
 `;
 
 function Presenter({ isLoading, item }: PresenterProps) {
@@ -37,11 +60,25 @@ function Presenter({ isLoading, item }: PresenterProps) {
   return (
     <MainWrapper>
       <PageHeader>
-        <CoinThumbnail>
-          {item.image && <img src={item.image} alt='thumbnail' />}
-        </CoinThumbnail>
-        <CoinInfo>{item.name} ({item.symbol.toUpperCase()})</CoinInfo>
+        <CoinThumbnail>{item.image && <img src={item.image} alt="thumbnail" />}</CoinThumbnail>
+        <CoinName>
+          {item.name} ({item.symbol.toUpperCase()})
+        </CoinName>
       </PageHeader>
+      <MarketDataTable>
+        <InlineFlexBox>
+          <MarketDataTitle>시가총액 Rank</MarketDataTitle>
+          <MarketDataValue>#{item.market_cap_rank}</MarketDataValue>
+        </InlineFlexBox>
+        <InlineFlexBox>
+          <MarketDataTitle>시가총액</MarketDataTitle>
+          <MarketDataValue>{item.market_cap}</MarketDataValue>
+        </InlineFlexBox>
+        <InlineFlexBox>
+          <MarketDataTitle>현재가격</MarketDataTitle>
+          <MarketDataValue>{item.current_price}</MarketDataValue>
+        </InlineFlexBox>
+      </MarketDataTable>
     </MainWrapper>
   );
 }

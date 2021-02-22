@@ -1,6 +1,4 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import { currencyState } from '@stores/recoil';
 import { DropDownMenu, ListItem, LoadingIndicator, LoadMoreButton, MainWrapper } from '@components/core';
 import { CoinData } from '@models/coin';
 
@@ -11,8 +9,6 @@ type PresenterProps = {
 };
 
 function Presenter({ isLoading, list, loadMoreItems }: PresenterProps) {
-  const currency = useRecoilValue(currencyState);
-
   return (
     <MainWrapper>
       <DropDownMenu />

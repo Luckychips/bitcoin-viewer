@@ -149,7 +149,7 @@ const ListItem = ({ item }: ListItemProps) => {
       <Symbol>{item.symbol.toUpperCase()}</Symbol>
       <MarketCapRank>#{item.market_cap_rank}</MarketCapRank>
       <Name onClick={goToDetailPage}>{item.name}</Name>
-      <PercentageChangesWithIn24Hours color={percentageColor}>{percentageText}</PercentageChangesWithIn24Hours>
+      <PercentageChangesWithIn24Hours color={percentageColor}>{percentageText}%</PercentageChangesWithIn24Hours>
       <CurrentPrice>{prefixToValue(currency, item.current_price)}</CurrentPrice>
     </Wrapper>
   );
