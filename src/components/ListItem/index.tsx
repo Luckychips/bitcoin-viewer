@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import styled from '@emotion/styled';
 import { Star } from '@emotion-icons/fa-solid';
@@ -55,6 +56,10 @@ const MarketCapRank = styled.span`
 const Name = styled.span`
   width: 20%;
   font-weight: bold;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const PercentageChangesWithIn24Hours = styled.span`
@@ -94,6 +99,7 @@ const getPercentageValue = (value: number | undefined) => {
 };
 
 const ListItem = ({ item }: ListItemProps) => {
+  const history = useHistory();
   const currency = useRecoilValue(currencyState);
   const [bookMarks, setBookMarks] = useRecoilState(bookMarksStateFromLocalStorage);
   const [isBookMarked, setIsBookMarked] = useState(false);
@@ -119,6 +125,12 @@ const ListItem = ({ item }: ListItemProps) => {
     }
   };
 
+  const goToDetailPage = () => {
+    history.push(`/coin/${item.id}`, {
+      detailCoinItem: item,
+    });
+  };
+
   useEffect(() => {
     for (let i = 0; i < bookMarks.length; i++) {
       if (item.id === bookMarks[i].id) {
@@ -136,7 +148,7 @@ const ListItem = ({ item }: ListItemProps) => {
       <ThumbnailWrapper>{item.image && <img src={item.image} alt="thumbnail" />}</ThumbnailWrapper>
       <Symbol>{item.symbol.toUpperCase()}</Symbol>
       <MarketCapRank>#{item.market_cap_rank}</MarketCapRank>
-      <Name>{item.name}</Name>
+      <Name onClick={goToDetailPage}>{item.name}</Name>
       <PercentageChangesWithIn24Hours color={percentageColor}>{percentageText}</PercentageChangesWithIn24Hours>
       <CurrentPrice>{prefixToValue(currency, item.current_price)}</CurrentPrice>
     </Wrapper>

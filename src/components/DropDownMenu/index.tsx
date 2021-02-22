@@ -5,7 +5,7 @@ import { ChevronUp, ChevronDown } from '@emotion-icons/fa-solid';
 import { CURRENCY_NAMES } from '@variables/constant';
 import { currencyState, currencyStateFromLocalStorage } from '@stores/Currency';
 
-const Container = styled.div`
+const Wrapper = styled.div`
   position: relative;
   display: inline-block;
   z-index: 11;
@@ -56,7 +56,7 @@ const DropDownMenu = () => {
   };
 
   return (
-    <Container>
+    <Wrapper>
       <Header onClick={() => setIsVisibleMenu(!isVisibleMenu)}>
         <HeaderText>{currency}</HeaderText>
         {isVisibleMenu ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
@@ -70,7 +70,7 @@ const DropDownMenu = () => {
           ))}
         </MenuItems>
       )}
-    </Container>
+    </Wrapper>
   );
 };
 
