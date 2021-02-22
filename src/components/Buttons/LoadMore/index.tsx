@@ -15,7 +15,6 @@ const Wrapper = styled.div`
     background-color: #376fe0;
     color: white;
     border-radius: 5px;
-    
 
     &:hover {
       cursor: pointer;

@@ -1,7 +1,29 @@
 import React from 'react';
+import styled from '@emotion/styled';
+import {Spinner} from '@emotion-icons/fa-solid';
+
+const Wrapper = styled.div`
+  @keyframes spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+    
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  svg {
+    animation: spinner 1.5s linear infinite;
+  }
+`;
 
 const LoadingIndicator = () => {
-  return <div>loading...</div>;
+  return (
+      <Wrapper>
+        <Spinner size={30} color="#376fe0" />
+      </Wrapper>
+  );
 };
 
 export default LoadingIndicator;
