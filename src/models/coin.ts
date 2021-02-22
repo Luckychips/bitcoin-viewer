@@ -7,5 +7,4 @@ export type CoinData = {
   market_cap_rank?: string;
   price_change_24h?: number;
   price_change_percentage_24h?: number;
-  isBookMarked: boolean;
 };

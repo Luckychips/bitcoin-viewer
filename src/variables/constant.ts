@@ -5,6 +5,7 @@ export const PATH_NAMES = {
 
 export const STORAGE_KEY_NAMES = {
   CURRENCY: 'CURRENCY',
+  BOOKMARKS: 'BOOKMARKS',
 };
 
 export const CURRENCY_NAMES = {
