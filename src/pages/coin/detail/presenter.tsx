@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from '@emotion/styled';
 import { currencyState } from '@stores/Currency';
-import { MainWrapper, InlineFlexBox, LoadingIndicator } from '@components/core';
+import { MainWrapper, InlineFlexBox, BookMarkButton, LoadingIndicator } from '@components/core';
 import { CoinData } from '@models/coin';
 
 type PresenterProps = {
@@ -60,6 +60,7 @@ function Presenter({ isLoading, item }: PresenterProps) {
   return (
     <MainWrapper>
       <PageHeader>
+        <BookMarkButton item={item} />
         <CoinThumbnail>{item.image && <img src={item.image} alt="thumbnail" />}</CoinThumbnail>
         <CoinName>
           {item.name} ({item.symbol.toUpperCase()})
@@ -72,11 +73,11 @@ function Presenter({ isLoading, item }: PresenterProps) {
         </InlineFlexBox>
         <InlineFlexBox>
           <MarketDataTitle>시가총액</MarketDataTitle>
-          <MarketDataValue>{item.market_cap}</MarketDataValue>
+          <MarketDataValue>{item.market_cap.toLocaleString()}</MarketDataValue>
         </InlineFlexBox>
         <InlineFlexBox>
           <MarketDataTitle>현재가격</MarketDataTitle>
-          <MarketDataValue>{item.current_price}</MarketDataValue>
+          <MarketDataValue>{item.current_price.toLocaleString()}</MarketDataValue>
         </InlineFlexBox>
       </MarketDataTable>
     </MainWrapper>

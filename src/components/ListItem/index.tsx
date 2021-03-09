@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import styled from '@emotion/styled';
-import { Star } from '@emotion-icons/fa-solid';
-import { currencyState, bookMarksStateFromLocalStorage } from '@stores/recoil';
+import { currencyState } from '@stores/recoil';
 import { CoinData } from '@models/coin';
 import { themeColor } from '@variables/env';
+import { BookMarkButton } from '@components/core';
 import { prefixToValue } from '@libs/currency';
 
 type ListItemProps = {
@@ -20,20 +20,6 @@ const Wrapper = styled.div`
 
   &:hover {
     background-color: ${themeColor};
-  }
-`;
-
-const BookMarkButton = styled.span`
-  position: relative;
-  width: 4%;
-
-  svg {
-    position: absolute;
-    top: -11.5px;
-  }
-
-  &:hover {
-    cursor: pointer;
   }
 `;
 
@@ -101,29 +87,7 @@ const getPercentageValue = (value: number | undefined) => {
 const ListItem = ({ item }: ListItemProps) => {
   const history = useHistory();
   const currency = useRecoilValue(currencyState);
-  const [bookMarks, setBookMarks] = useRecoilState(bookMarksStateFromLocalStorage);
-  const [isBookMarked, setIsBookMarked] = useState(false);
   const { percentageColor, percentageText } = getPercentageValue(item.price_change_percentage_24h);
-
-  const toggleBookMark = () => {
-    if (isBookMarked) {
-      const deepCopied = bookMarks.slice();
-      let targetIndex = 0;
-      for (let i = 0; i < deepCopied.length; i++) {
-        if (item.id === deepCopied[i].id) {
-          targetIndex = i;
-          break;
-        }
-      }
-
-      deepCopied.splice(targetIndex, 1);
-      setIsBookMarked(false);
-      setBookMarks(deepCopied);
-    } else {
-      setIsBookMarked(true);
-      setBookMarks([...bookMarks, item]);
-    }
-  };
 
   const goToDetailPage = () => {
     history.push(`/coin/${item.id}`, {
@@ -131,20 +95,9 @@ const ListItem = ({ item }: ListItemProps) => {
     });
   };
 
-  useEffect(() => {
-    for (let i = 0; i < bookMarks.length; i++) {
-      if (item.id === bookMarks[i].id) {
-        setIsBookMarked(true);
-        break;
-      }
-    }
-  }, []);
-
   return (
     <Wrapper>
-      <BookMarkButton onClick={() => toggleBookMark()}>
-        <Star size={20} color={isBookMarked ? 'pink' : '#ddd'} />
-      </BookMarkButton>
+      <BookMarkButton item={item} />
       <ThumbnailWrapper>{item.image && <img src={item.image} alt="thumbnail" />}</ThumbnailWrapper>
       <Symbol>{item.symbol.toUpperCase()}</Symbol>
       <MarketCapRank>#{item.market_cap_rank}</MarketCapRank>
