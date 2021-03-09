@@ -3,10 +3,10 @@ import { useRecoilState } from 'recoil';
 import styled from '@emotion/styled';
 import { Star } from '@emotion-icons/fa-solid';
 import { bookMarksStateFromLocalStorage } from '@stores/BookMarks';
-import { CoinData } from '@models/coin';
+import {CoinData, CoinDetailData} from '@models/coin';
 
 type BookMarkProps = {
-  item: CoinData;
+  item: CoinData | CoinDetailData;
 };
 
 const BookMarkButton = styled.span`
@@ -43,7 +43,15 @@ const BookMark = ({ item }: BookMarkProps) => {
       setBookMarks(deepCopied);
     } else {
       setIsBookMarked(true);
-      setBookMarks([...bookMarks, item]);
+      const newBookMark: CoinData = {
+        id: item.id,
+        name: item.name,
+        symbol: item.symbol,
+        current_price: 0,
+        market_cap: 0,
+      };
+
+      setBookMarks([...bookMarks, newBookMark]);
     }
   };
 

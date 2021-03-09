@@ -1,6 +1,6 @@
 import { CURRENCY_NAMES } from '@variables/constant';
 
-export const prefixToValue = (currency: string, target: number) => {
+export const prefixToValue = (currency: string, target: number | string) => {
   let prefix = '₩';
   switch (currency) {
     case CURRENCY_NAMES.KRW:
