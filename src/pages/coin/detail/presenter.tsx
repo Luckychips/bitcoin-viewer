@@ -1,9 +1,16 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { MainWrapper, InlineFlexBox, BookMarkButton, LoadingIndicator, DropDownMenu } from '@components/core';
+import {
+  MainWrapper,
+  InlineFlexBox,
+  BookMarkButton,
+  LoadingIndicator,
+  DropDownMenu,
+  BookMarker,
+} from '@components/core';
 import { CoinDetailData } from '@models/coin';
 import { prefixToValue } from '@libs/currency';
-import {CURRENCY_NAMES} from "@variables/constant";
+import { CURRENCY_NAMES } from '@variables/constant';
 
 type PresenterProps = {
   isLoading: boolean;
@@ -61,7 +68,7 @@ const MarketDataValue = styled.div`
 const HomePageLink = styled.a`
   text-decoration: none;
   color: darkgray;
-  
+
   &:visited {
     color: darkgray;
   }
@@ -152,6 +159,7 @@ function Presenter({ currency, isLoading, item }: PresenterProps) {
 
   return (
     <MainWrapper>
+      <BookMarker />
       <PageHeader>
         <BookMarkButton item={item} />
         <CoinThumbnail>{item.image.small && <img src={item.image.small} alt="thumbnail" />}</CoinThumbnail>
@@ -166,7 +174,9 @@ function Presenter({ currency, isLoading, item }: PresenterProps) {
         <InlineFlexBox>
           <MarketDataTitle>웹사이트</MarketDataTitle>
           <MarketDataValue>
-            <HomePageLink href={getHomePage()} target="_blank">{getHomePage()}</HomePageLink>
+            <HomePageLink href={getHomePage()} target="_blank">
+              {getHomePage()}
+            </HomePageLink>
           </MarketDataValue>
         </InlineFlexBox>
         <InlineFlexBox>

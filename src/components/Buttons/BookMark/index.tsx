@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import styled from '@emotion/styled';
 import { Star } from '@emotion-icons/fa-solid';
 import { bookMarksStateFromLocalStorage } from '@stores/BookMarks';
-import {CoinData, CoinDetailData} from '@models/coin';
+import { CoinData, CoinDetailData } from '@models/coin';
 
 type BookMarkProps = {
   item: CoinData | CoinDetailData;
@@ -23,9 +23,23 @@ const BookMarkButton = styled.span`
   }
 `;
 
+const ToastMessage = styled.div`
+  z-index: 5;
+  position: absolute;
+  top: 40px;
+  background-color: #360bf0;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+`;
+
 const BookMark = ({ item }: BookMarkProps) => {
   const [bookMarks, setBookMarks] = useRecoilState(bookMarksStateFromLocalStorage);
   const [isBookMarked, setIsBookMarked] = useState(false);
+  const [isHideToastText, setIsHideToastText] = useState(true);
+  const [toastText, setToastText] = useState('');
 
   const toggleBookMark = () => {
     if (isBookMarked) {
@@ -39,18 +53,32 @@ const BookMark = ({ item }: BookMarkProps) => {
       }
 
       deepCopied.splice(targetIndex, 1);
+      setToastText('삭제');
+      setIsHideToastText(false);
       setIsBookMarked(false);
       setBookMarks(deepCopied);
     } else {
       setIsBookMarked(true);
+      let image = 'https://via.placeholder.com/20x20';
+      if (typeof item.image === 'string') {
+        image = item.image;
+      }
+
+      if (item.image && item.image.hasOwnProperty('small')) {
+        image = item.image.small as string;
+      }
+
       const newBookMark: CoinData = {
         id: item.id,
         name: item.name,
         symbol: item.symbol,
         current_price: 0,
         market_cap: 0,
+        image: image,
       };
 
+      setToastText('추가');
+      setIsHideToastText(false);
       setBookMarks([...bookMarks, newBookMark]);
     }
   };
@@ -64,10 +92,21 @@ const BookMark = ({ item }: BookMarkProps) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isHideToastText) {
+      setTimeout(() => {
+        setIsHideToastText(true);
+      }, 1000);
+    }
+  }, [isHideToastText]);
+
   return (
-    <BookMarkButton onClick={() => toggleBookMark()}>
-      <Star size={20} color={isBookMarked ? 'pink' : '#ddd'} />
-    </BookMarkButton>
+    <>
+      <BookMarkButton onClick={() => toggleBookMark()}>
+        <Star size={20} color={isBookMarked ? 'pink' : '#ddd'} />
+      </BookMarkButton>
+      {!isHideToastText && <ToastMessage>북마크 {toastText}되었습니다.</ToastMessage>}
+    </>
   );
 };
 

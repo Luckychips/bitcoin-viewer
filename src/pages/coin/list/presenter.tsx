@@ -1,5 +1,5 @@
 import React from 'react';
-import { DropDownMenu, ListItem, LoadingIndicator, LoadMoreButton, MainWrapper } from '@components/core';
+import { BookMarker, DropDownMenu, ListItem, LoadingIndicator, LoadMoreButton, MainWrapper } from '@components/core';
 import { CoinData } from '@models/coin';
 
 type PresenterProps = {
@@ -11,6 +11,7 @@ type PresenterProps = {
 function Presenter({ isLoading, list, loadMoreItems }: PresenterProps) {
   return (
     <MainWrapper>
+      <BookMarker />
       <DropDownMenu />
       {list.map((item, index) => (
         <ListItem key={`coin-item-${index}`} item={item} />
