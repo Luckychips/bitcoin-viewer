@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { MainWrapper, BookMarkButton, LoadingIndicator, DropDownMenu, BookMarker } from '@components/core';
 import { CoinDetailData } from '@models/coin';
 import { CURRENCY_NAMES } from '@variables/constant';
-import { MarketDataTable } from './components';
+import { MarketDataTable, CandleStickChart } from './components';
 
 type PresenterProps = {
   isLoading: boolean;
@@ -52,15 +52,15 @@ const TabItem = styled.div`
   font-weight: bold;
   color: white;
   background-color: #376fe0;
-  padding: 15px 0; 
-  
+  padding: 15px 0;
+
   &:hover {
     cursor: pointer;
     background-color: #ddd;
   }
-  
-  &.active { 
-    border: 0.5px solid #000; 
+
+  &.active {
+    border: 0.5px solid #000;
   }
 `;
 
@@ -111,8 +111,12 @@ function Presenter({ currency, isLoading, item }: PresenterProps) {
       </PageHeader>
       <Tabs>
         <TabHeader>
-          <TabItem className={currentTabIndex === 0 ? 'active' : ''} onClick={() => setCurrentTabIndex(0)}>데이터</TabItem>
-          <TabItem className={currentTabIndex !== 0 ? 'active' : ''} onClick={() => setCurrentTabIndex(1)}>차트</TabItem>
+          <TabItem className={currentTabIndex === 0 ? 'active' : ''} onClick={() => setCurrentTabIndex(0)}>
+            데이터
+          </TabItem>
+          <TabItem className={currentTabIndex !== 0 ? 'active' : ''} onClick={() => setCurrentTabIndex(1)}>
+            차트
+          </TabItem>
         </TabHeader>
         {currentTabIndex === 0 ? (
           <>
@@ -122,7 +126,7 @@ function Presenter({ currency, isLoading, item }: PresenterProps) {
             </CurrencyMenuWrapper>
           </>
         ) : (
-          <div>chart</div>
+          <CandleStickChart />
         )}
       </Tabs>
       {currentTabIndex === 0 && <Description dangerouslySetInnerHTML={{ __html: getDescriptionText() }} />}
