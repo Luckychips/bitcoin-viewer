@@ -1,16 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import {
-  MainWrapper,
-  InlineFlexBox,
-  BookMarkButton,
-  LoadingIndicator,
-  DropDownMenu,
-  BookMarker,
-} from '@components/core';
+import { MainWrapper, BookMarkButton, LoadingIndicator, DropDownMenu, BookMarker } from '@components/core';
 import { CoinDetailData } from '@models/coin';
-import { prefixToValue } from '@libs/currency';
 import { CURRENCY_NAMES } from '@variables/constant';
+import { MarketDataTable } from './components';
 
 type PresenterProps = {
   isLoading: boolean;
@@ -38,39 +31,36 @@ const CoinName = styled.span`
 
 const CurrencyMenuWrapper = styled.div`
   position: absolute;
-  top: 12.5px;
+  top: 110px;
   right: 0;
 `;
 
-const MarketDataTable = styled.div`
-  display: inline-block;
-  display: inline-block;
-  margin-top: 30px;
-  border: 1px solid #777;
-
-  & > div:not(:first-of-type) {
-    border-top: 1px solid #777;
-  }
+const Tabs = styled.div`
+  position: relative;
 `;
 
-const MarketDataTitle = styled.div`
-  width: 120px;
-  padding: 10px;
+const TabHeader = styled.div`
+  width: 100%;
+  margin: 25px 0;
+`;
+
+const TabItem = styled.div`
+  width: calc(50% - 1px);
+  display: inline-block;
+  text-align: center;
+  font-size: 1.2rem;
   font-weight: bold;
-  background-color: #ddd;
-`;
-
-const MarketDataValue = styled.div`
-  width: 250px;
-  padding: 10px;
-`;
-
-const HomePageLink = styled.a`
-  text-decoration: none;
-  color: darkgray;
-
-  &:visited {
-    color: darkgray;
+  color: white;
+  background-color: #376fe0;
+  padding: 15px 0; 
+  
+  &:hover {
+    cursor: pointer;
+    background-color: #ddd;
+  }
+  
+  &.active { 
+    border: 0.5px solid #000; 
   }
 `;
 
@@ -85,55 +75,7 @@ const Description = styled.div`
 `;
 
 function Presenter({ currency, isLoading, item }: PresenterProps) {
-  const getHomePage = () => {
-    let value = '-';
-    if (item) {
-      if (item.links.homepage.length > 0) {
-        value = item.links.homepage[0];
-      }
-    }
-
-    return value;
-  };
-
-  const getMarketCap = () => {
-    let value: number | string = 0;
-    if (item) {
-      switch (currency) {
-        case CURRENCY_NAMES.KRW:
-          value = item.market_data.market_cap.krw;
-          break;
-        case CURRENCY_NAMES.USD:
-          value = item.market_data.market_cap.usd;
-          break;
-        case CURRENCY_NAMES.JPY:
-          value = item.market_data.market_cap.jpy;
-          break;
-      }
-    }
-
-    return value;
-  };
-
-  const getCurrentPriceFromMarket = () => {
-    let value: number | string = 0;
-    if (item) {
-      switch (currency) {
-        case CURRENCY_NAMES.KRW:
-          value = item.market_data.current_price.krw;
-          break;
-        case CURRENCY_NAMES.USD:
-          value = item.market_data.current_price.usd;
-          break;
-        case CURRENCY_NAMES.JPY:
-          value = item.market_data.current_price.jpy;
-          break;
-      }
-    }
-
-    return value;
-  };
-
+  const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const getDescriptionText = () => {
     let text = '';
     if (item) {
@@ -166,33 +108,24 @@ function Presenter({ currency, isLoading, item }: PresenterProps) {
         <CoinName>
           {item.name} ({item.symbol.toUpperCase()})
         </CoinName>
-        <CurrencyMenuWrapper>
-          <DropDownMenu />
-        </CurrencyMenuWrapper>
       </PageHeader>
-      <MarketDataTable>
-        <InlineFlexBox>
-          <MarketDataTitle>웹사이트</MarketDataTitle>
-          <MarketDataValue>
-            <HomePageLink href={getHomePage()} target="_blank">
-              {getHomePage()}
-            </HomePageLink>
-          </MarketDataValue>
-        </InlineFlexBox>
-        <InlineFlexBox>
-          <MarketDataTitle>시가총액 Rank</MarketDataTitle>
-          <MarketDataValue>#{item?.market_data.market_cap_rank}</MarketDataValue>
-        </InlineFlexBox>
-        <InlineFlexBox>
-          <MarketDataTitle>시가총액</MarketDataTitle>
-          <MarketDataValue>{prefixToValue(currency, getMarketCap())}</MarketDataValue>
-        </InlineFlexBox>
-        <InlineFlexBox>
-          <MarketDataTitle>현재가격</MarketDataTitle>
-          <MarketDataValue>{prefixToValue(currency, getCurrentPriceFromMarket())}</MarketDataValue>
-        </InlineFlexBox>
-      </MarketDataTable>
-      <Description dangerouslySetInnerHTML={{ __html: getDescriptionText() }} />
+      <Tabs>
+        <TabHeader>
+          <TabItem className={currentTabIndex === 0 ? 'active' : ''} onClick={() => setCurrentTabIndex(0)}>데이터</TabItem>
+          <TabItem className={currentTabIndex !== 0 ? 'active' : ''} onClick={() => setCurrentTabIndex(1)}>차트</TabItem>
+        </TabHeader>
+        {currentTabIndex === 0 ? (
+          <>
+            <MarketDataTable item={item} currency={currency} />
+            <CurrencyMenuWrapper>
+              <DropDownMenu />
+            </CurrencyMenuWrapper>
+          </>
+        ) : (
+          <div>chart</div>
+        )}
+      </Tabs>
+      {currentTabIndex === 0 && <Description dangerouslySetInnerHTML={{ __html: getDescriptionText() }} />}
     </MainWrapper>
   );
 }
