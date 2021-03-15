@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { MainWrapper, BookMarkButton, LoadingIndicator, DropDownMenu, BookMarker } from '@components/core';
 import { CoinDetailData } from '@models/coin';
 import { CURRENCY_NAMES } from '@variables/constant';
-import { MarketDataTable, CandleStickChart } from './components';
+import { MarketDataTable, CandleStickChart, LineChart } from './components';
 
 type PresenterProps = {
   isLoading: boolean;
@@ -126,7 +126,7 @@ function Presenter({ currency, isLoading, item }: PresenterProps) {
             </CurrencyMenuWrapper>
           </>
         ) : (
-          <CandleStickChart />
+          <LineChart item={item} currency={currency} />
         )}
       </Tabs>
       {currentTabIndex === 0 && <Description dangerouslySetInnerHTML={{ __html: getDescriptionText() }} />}

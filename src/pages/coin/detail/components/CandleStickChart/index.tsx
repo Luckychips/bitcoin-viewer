@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Chart from 'react-apexcharts';
 
 const CandleStickChart = () => {
+  useEffect(() => {
+    console.log('render...');
+  }, []);
   const series = [
     {
       data: [
