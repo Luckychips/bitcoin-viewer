@@ -24,7 +24,6 @@ function Container({ id }: ContainerProps) {
         });
 
         const json = await response.json();
-        console.log(json);
         setItem(json);
         setIsLoading(false);
       } catch (e) {

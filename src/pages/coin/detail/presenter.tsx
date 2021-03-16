@@ -64,6 +64,10 @@ const TabItem = styled.div`
   }
 `;
 
+const Spacing = styled.div`
+  padding: 30px;
+`;
+
 const Description = styled.div`
   padding-top: 25px;
   margin-top: 30px;
@@ -126,7 +130,12 @@ function Presenter({ currency, isLoading, item }: PresenterProps) {
             </CurrencyMenuWrapper>
           </>
         ) : (
-          <LineChart item={item} currency={currency} />
+          <>
+            <CandleStickChart item={item} currency={currency} />
+            <Spacing />
+            <LineChart item={item} currency={currency} />
+            <Spacing />
+          </>
         )}
       </Tabs>
       {currentTabIndex === 0 && <Description dangerouslySetInnerHTML={{ __html: getDescriptionText() }} />}

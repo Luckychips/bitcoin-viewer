@@ -33,7 +33,7 @@ const LineChart = ({ item, currency }: LineChartProps) => {
         }
       })();
     }
-  }, [item]);
+  }, [item, currency]);
 
   const options = {
     chart: {
@@ -56,7 +56,7 @@ const LineChart = ({ item, currency }: LineChartProps) => {
       size: 0,
     },
     title: {
-      text: '',
+      text: 'Coin Price Movement',
       align: 'left',
     },
     fill: {
